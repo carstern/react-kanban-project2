@@ -9,9 +9,11 @@ const TaskCard = ({index, columnPosition}) => {
 
   return (
     <div>
-      <div className="task-row">
+      <div className="task-row" key={index}>
+      <div onClick={() => openModal(tasks)} key={index}>
         <h3>{tasks[columnPosition].tasks[index].taskTitle}</h3>
         <h3>{tasks[columnPosition].tasks[index].content}</h3>
+        </div>
         <div className='icons'>
             <RiCloseCircleLine className='delete-icon' />
             <RiArrowRightLine />
