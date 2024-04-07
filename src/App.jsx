@@ -24,7 +24,7 @@ function App() {
     
       {/* DataContex.provider tillhandahåller den data som variabeln DataContexts values innehåller, exempelvis via det som useState tar in från taskdata. Genom att sätta tasks så tar jag mig in i taskdata och kommer åt datan samt kan pass data till den med setTask.  */}
       <DataContext.Provider value={[tasks, setTasks]}>
-      <TaskAdd />
+      <TaskAdd setTasks={setTasks}/>
 
  <ColumnList tasks={tasks}/>
  </DataContext.Provider>
