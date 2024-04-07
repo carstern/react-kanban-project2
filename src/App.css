@@ -1,0 +1,224 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+body {
+  background: linear-gradient(
+    90deg,
+    rgb(189, 176, 122) 0%,
+    rgb(107, 125, 135) 100%
+  );
+}
+.kanban-app {
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+  min-height: 600px;
+  background: #161a2b;
+  text-align: center;
+  margin: 20px;
+  border-radius: 10px;
+  padding-bottom: 32px;
+}
+header,
+footer {
+  display: flex;
+  justify-content: center;
+}
+
+h1,
+h2 {
+  margin: 32px 0;
+  color: #fff;
+  font-size: 24px;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+}
+
+.add-task-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  margin-bottom: 16px; /* Add some space between form and button */
+}
+
+.add-task-input {
+  padding: 14px 16px;
+  border-radius: 4px;
+  border: 2px solid rgb(216, 164, 91);
+  outline: none;
+  background: transparent;
+  color: #fff;
+  margin-bottom: 16px;
+  width: 320px; /* Set width of input fields */
+}
+
+.add-task-input::placeholder {
+  color: #e2e2e2;
+}
+
+.add-task-dropdown {
+  padding: 14px 16px;
+  border-radius: 4px;
+  border: 2px solid rgb(216, 164, 91);
+  outline: none;
+  background: transparent;
+  color: #fff;
+  margin-bottom: 16px;
+  width: 320px; 
+}
+
+
+.add-task-dropdown option {
+  background: #161a2b;
+  color: #fff;
+  border: none;
+}
+
+.add-task-dropdown option:first-child {
+  color: #e2e2e2; /* Placeholder color */
+}
+
+
+.add-task-btn {
+  padding: 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  background: linear-gradient(
+    90deg,
+    rgb(216, 164, 91) 0%,
+    rgb(85, 76, 44) 100%
+  );
+  color: #fff;
+  text-transform: capitalize;
+  width: 320px; /* Set width of button to match input fields */
+}
+
+.task-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.task-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4px auto;
+  color: #fff;
+  background: linear-gradient(
+    90deg,
+    rgb(101, 47, 8) 0%,
+    rgba(189, 176, 122) 100%
+  );
+
+  padding: 16px;
+  border-radius: 5px;
+  width: 90%;
+}
+
+.task-row:nth-child(4n + 1) {
+  background: linear-gradient(
+    90deg,
+    rgb(39, 6, 105) 0%,
+    rgba(189, 176, 122) 100%
+  );
+}
+
+.task-row:nth-child(4n + 2) {
+  background: linear-gradient(
+    90deg,
+    rgb(77, 6, 73) 0%,
+    rgba(189, 176, 122) 100%
+  );
+}
+
+.task-row:nth-child(4n + 3) {
+  background: linear-gradient(
+    90deg,
+    rgb(8, 56, 90) 0%,
+    rgba(189, 176, 122) 100%
+  );
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.delete-icon {
+  margin-right: 5px;
+  color: #fff;
+}
+
+.edit-icon {
+  color: #fff;
+}
+
+/* Modal */
+.overlay {
+  position: fixed;
+  top: 0; /* Position the modal 20 viewport widths down from the top */
+  left: 0;
+  width: 100%;
+  height: calc(100%);
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: -30vh;
+  width: 80%;
+  height: 40%;
+  max-width: 700px;
+  background: linear-gradient(
+    90deg,
+    rgb(77, 6, 73) 0%,
+    rgba(189, 176, 122) 100%
+  );
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-task-text {
+  margin: auto;
+  border: 1px solid black;
+  height: 10%;
+  width: 90%;
+}
+
+.modal-task-text p {
+  color: white;
+  font-size: x-large;
+}
+
+.modal-task-description {
+  margin: auto;
+  border: 1px solid black;
+  height: 80%;
+  width: 90%;
+}
+
+.modal-task-description p {
+  color: white;
+}
