@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, {useState, useContext} from "react";
+import { DataContext } from "../App";
 
 function TaskAdd() {
+  const [tasks, setTasks] = useContext(DataContext);
   const [userInputs, setUserInputs] = useState({
     taskTitle: "",
     content: "",
