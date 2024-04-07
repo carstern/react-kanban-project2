@@ -1,34 +1,37 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 
 function TaskAdd({setTasks}) {
   const [userInputs, setUserInputs] = useState({
     taskTitle: "",
     content: "",
   });
+  function getTimeStamp() {
+    return new Date().toISOString();
+  }
 
   function handleSubmit() {
     setTasks((prevTasks) => {
       let newTasks = prevTasks.map((column) => ({
         ...column,
-        tasks: column.tasks.map((task) => ({ ...task })),
+        tasks: column.tasks.map((task) => ({...task})),
       }));
       const newTask = {
         taskTitle: userInputs.taskTitle,
         content: userInputs.content,
         date: getTimeStamp(),
       };
-  
+
       newTasks[0].tasks.push(newTask);
       return newTasks;
     });
   }
 
   function handleTitleChange(e) {
-    setUserInputs((prev) => ({ ...prev, taskTitle: e.target.value }));
+    setUserInputs((prev) => ({...prev, taskTitle: e.target.value}));
   }
 
   function handleContentChange(e) {
-    setUserInputs((prev) => ({ ...prev, content: e.target.value }));
+    setUserInputs((prev) => ({...prev, content: e.target.value}));
   }
 
   return (
@@ -53,7 +56,9 @@ function TaskAdd({setTasks}) {
           />
           <label htmlFor="list"></label>
         </div>
-        <button type="submit" className="add-task-btn" onClick={handleSubmit}>Add</button>
+        <button type="submit" className="add-task-btn" onClick={handleSubmit}>
+          Add
+        </button>
       </form>
     </div>
   );
