@@ -9,7 +9,8 @@ function TaskAdd({setTasks}) {
     return new Date().toISOString();
   }
 
-  function handleSubmit() {
+  function handleSubmit(e) {
+    e.preventDefault();
     setTasks((prevTasks) => {
       let newTasks = prevTasks.map((column) => ({
         ...column,
@@ -31,8 +32,10 @@ function TaskAdd({setTasks}) {
   }
 
   function handleContentChange(e) {
-    setUserInputs((prev) => ({...prev, content: e.target.value}));
+    const truncatedContent = e.target.value.slice(0, 10);
+    setUserInputs((prev) => ({...prev, content:truncatedContent}));
   }
+
 
   return (
     <div className="form-container">
