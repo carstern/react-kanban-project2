@@ -3,7 +3,6 @@ import TaskCard from "./TaskCard";
 const Column = ({task, columnPosition}) => {
   return (
     <>
-      {console.log(task)}
       <div className="kanban-app">
         {task.columnTitle}
         {task.tasks.map((tempTask, index) => (

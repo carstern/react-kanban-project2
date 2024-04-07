@@ -1,10 +1,27 @@
 import React, { useState } from "react";
 
-function TaskAdd({ handleSubmit }) {
+function TaskAdd() {
   const [userInputs, setUserInputs] = useState({
     taskTitle: "",
     content: "",
   });
+
+  function handleSubmit() {
+    setTasks((prevTasks) => {
+      let newTasks = prevTasks.map((column) => ({
+        ...column,
+        tasks: column.tasks.map((task) => ({ ...task })),
+      }));
+      const newTask = {
+        taskTitle: userInputs.taskTitle,
+        content: userInputs.content,
+        date: getTimeStamp(),
+      };
+  
+      newTasks[0].tasks.push(newTask);
+      return newTasks;
+    });
+  }
 
   function handleTitleChange(e) {
     setUserInputs((prev) => ({ ...prev, taskTitle: e.target.value }));
@@ -16,7 +33,7 @@ function TaskAdd({ handleSubmit }) {
 
   return (
     <div className="form-container">
-      <form className="add-task-form" onSubmit={handleSubmit}>
+      <form className="add-task-form">
         <div className="input-container">
           <input
             type="text"
@@ -36,7 +53,7 @@ function TaskAdd({ handleSubmit }) {
           />
           <label htmlFor="list"></label>
         </div>
-        <button type="submit" className="add-task-btn">Add</button>
+        <button type="submit" className="add-task-btn" onClick={handleSubmit}>Add</button>
       </form>
     </div>
   );

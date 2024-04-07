@@ -13,23 +13,8 @@ function App() {
   const [tasks, setTasks] = useState(taskdata); // tasks variabeln håller data från taskdata (mitt initial state) och genom den kan jag komma åt de objekt jag har i den filen. Ex tasks, columner och deras properties. 
 
 
-function handleSubmit() {
   
-    setTasks((prevTasks) => {
-      let newTasks = prevTasks.map((column) => ({
-        ...column,
-        tasks: column.tasks.map((task) => ({ ...task })),
-      }));
-      const newTask = {
-        taskTitle: userInputs.taskTitle,
-        content: userInputs.content,
-        date: getTimeStamp(),
-      };
-
-      newTasks[0].tasks.push(newTask);
-      return newTasks;
-    });
-  }
+  
 
   return (
     <>
@@ -39,7 +24,7 @@ function handleSubmit() {
     
       {/* DataContex.provider tillhandahåller den data som variabeln DataContexts values innehåller, exempelvis via det som useState tar in från taskdata. Genom att sätta tasks så tar jag mig in i taskdata och kommer åt datan samt kan pass data till den med setTask.  */}
       <DataContext.Provider value={[tasks, setTasks]}>
-      <TaskAdd handleSubmit={handleSubmit} />
+      <TaskAdd />
 
  <ColumnList tasks={tasks}/>
  </DataContext.Provider>
