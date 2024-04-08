@@ -1,71 +1,91 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-const TaskModal = ({ task, onClose, updateTask }) => {
-  const [editedTitle, setEditedTitle] = useState(task.text);
-  const [editedDescription, setEditedDescription] = useState(task.description);
+const TaskModal = ({ taskTitle, taskContent, onSave, onClose, handleDelete }) => {
+  const [editedTitle, setEditedTitle] = useState(taskTitle);
+  const [editedContent, setEditedContent] = useState(taskContent);
   const [isEditing, setIsEditing] = useState(false);
+  const [showCloseAlert, setShowCloseAlert] = useState(false); // Track if the close alert is shown
 
-  useEffect(() => {
-    setEditedTitle(task.text);
-    setEditedDescription(task.description);
-  }, [task]);
-
-  const handleTitleEdit = (e) => {
-    setEditedTitle(e.target.value);
+  const handleTitleChange = (event) => {
+    setEditedTitle(event.target.value);
   };
 
-  const handleDescriptionEdit = (e) => {
-    setEditedDescription(e.target.value);
+  const handleContentChange = (event) => {
+    setEditedContent(event.target.value);
   };
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
-
-  const handleSave = () => {
-    updateTask(task.id, { text: editedTitle, description: editedDescription });
+  const handleEdit = () => {
+    onSave(editedTitle, editedContent);
     setIsEditing(false);
   };
 
-  const handleDiscard = () => {
-    setEditedTitle(task.text);
-    setEditedDescription(task.description);
-    setIsEditing(false);
+  const toggleEditing = () => {
+    setIsEditing(!isEditing);
+  };
+
+  
+  const handleOverlayClick = () => {
+    if (isEditing) {
+      setShowCloseAlert(true); // Show the close alert if editing
+    } else {
+      onClose(); // Close the modal if not editing
+    }
+  };
+
+  const handleCloseAlert = () => {
+    setShowCloseAlert(false); // Hide the close alert
   };
 
   return (
-    <div className='overlay' onClick={onClose}>
-      <div className='modalContainer' onClick={(e) => e.stopPropagation()}>
+    <div className='overlay' onClick={handleOverlayClick}>
+      <div className='modal-container' onClick={(e) => e.stopPropagation()}>
         {isEditing ? (
           <>
             <input
               type='text'
               value={editedTitle}
-              onChange={handleTitleEdit}
-              className='modal-task-text'
+              onChange={handleTitleChange}
+              className='modal-task-title'
             />
-            <input
-              type='text'
-              value={editedDescription}
-              onChange={handleDescriptionEdit}
-              className='modal-task-description'
-            />
+            <textarea
+              value={editedContent}
+              onChange={handleContentChange}
+              className='modal-task-content'
+            ></textarea>
           </>
         ) : (
           <>
-            <div className='modal-task-text'><p>{editedTitle}</p></div>
-            <div className='modal-task-description'><p>{editedDescription}</p></div>
+            <div className='modal-task-title'>{taskTitle}</div>
+            <div className='modal-task-content'>{taskContent}</div>
           </>
         )}
-        {isEditing ? (
-          <>
-            <button onClick={handleSave}>Save</button>
-            <button onClick={handleDiscard}>Discard</button>
-          </>
-        ) : (
-          <button onClick={handleEditClick}>Edit</button>
+        <button className='modal-btn' onClick={toggleEditing}>
+          {isEditing ? 'Discard' : 'Edit'}
+        </button>
+        {showCloseAlert && (
+          <div className='modal-close-alert-container'>
+            <p className='modal-close-warning-text'>Ooops, you're about to close the editor.</p>
+            <button className='modal-btn' onClick={handleCloseAlert}>Back</button>
+            <button className='modal-btn' onClick={onClose}>Close</button>
+          </div>
         )}
-        <button onClick={onClose}>Close</button>
+        {!isEditing && (
+          <button className='modal-btn' onClick={onClose}>
+            Close modal
+          </button>
+          
+        )}
+        {!isEditing && (
+          <button className='modal-btn' onClick={handleDelete}>
+            Delete Task
+          </button>
+          
+        )}
+        {isEditing && (
+          <button className='modal-btn' onClick={handleEdit}>
+            Save changes
+          </button>
+        )}
       </div>
     </div>
   );

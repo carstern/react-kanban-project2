@@ -1,8 +1,13 @@
-import React from 'react'
+import { Link } from "react-router-dom"
+
 
 const Error = () => {
   return (
-    <div>You're wrong</div>
+    
+    <main>
+        <h2>Don't panic!</h2>
+        <Link to="/">Get back to base</Link>
+    </main>
   )
 }
 

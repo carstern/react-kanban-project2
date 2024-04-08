@@ -1,37 +1,42 @@
 import "./App.css";
 import {useState, createContext} from "react";
-import {taskdata} from "./assets/taskdata"; 
+import {taskdata} from "./assets/taskdata";
 import ColumnList from "./components/ColumnList";
 import TaskAdd from "./components/TaskAdd";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import ColumnRoute from "./components/ColumnRoute";
 import Error from "./components/Error";
+import Layout from "./components/Layout";
+
+
+// To Do \\
+// Fixa header/footer styling
+// Local storage
+// Definiera de hårdkodade tasksen
+// kommentera kod
+// presentera date/timestamp i modalvy ? - om du hinner!
+// se till så du kan routa till att kolla på EN column
+// VG - Kunna byta namn samt skapa nya kolumner
+// VG - Kunna ändra bakgrundsbild och färgtema (context??)
+// VG - Användaren ska kunna skapa flera boards ?! (ny board-component?)
+// VG - Det ska finnas flera olika användare i en och samma board  - lägg till user i taskdata
 
 // Håller information om hur min data är/ska vara uppbyggd. Kolumnobjekt som har två properties. En property som är columnTitle och en property som är en array av 'tasks'. Varje objekt inuti task-arrayen har i sin tur properties som taskTitle, content, date och creator.
-export const DataContext = createContext(); // 
-
-
+export const DataContext = createContext(); //
 
 function App() {
-  const [tasks, setTasks] = useState(taskdata); // tasks variabeln håller data från taskdata (mitt initial state) och genom den kan jag komma åt de objekt jag har i den filen. Ex tasks, columner och deras properties. 
-
-
-  
-  
+  const [tasks, setTasks] = useState(taskdata); // tasks variabeln håller data från taskdata (mitt initial state) och genom den kan jag komma åt de objekt jag har i den filen. Ex tasks, columner och deras properties.
 
   return (
-    
     <Router>
-      <div>
-        <header>
-          <h1>React Kanban Board</h1>
-        </header>
-    
-      {/* DataContex.provider tillhandahåller den data som variabeln DataContexts values innehåller, exempelvis via det som useState tar in från taskdata. Genom att sätta tasks så tar jag mig in i taskdata och kommer åt datan samt kan pass data till den med setTask.  */}
-      
-      <Routes>
+
+
+        {/* DataContex.provider tillhandahåller den data som variabeln DataContexts values innehåller, exempelvis via det som useState tar in från taskdata. Genom att sätta tasks så tar jag mig in i taskdata och kommer åt datan samt kan pass data till den med setTask.  */}
+
+        <Routes>
+          <Route parth="/" element={<Layout />}>
           <Route
-            path="/"
+            index
             element={
               <DataContext.Provider value={[tasks, setTasks]}>
                 <TaskAdd setTasks={setTasks} />
@@ -39,28 +44,27 @@ function App() {
               </DataContext.Provider>
             }
           />
-<Route
-  path="/column"
-  element={
-    <DataContext.Provider value={[tasks, setTasks]}>
-      <TaskAdd setTasks={setTasks} />
-      
-      {tasks.map((task, index) => (
-        <ColumnRoute task={task} columnPosition={index} key={index} />
-      ))}
-    </DataContext.Provider>
-  }
-/>
+          
+          <Route
+            path="/column"
+            element={
+              <DataContext.Provider value={[tasks, setTasks]}>
+                <TaskAdd setTasks={setTasks} />
+
+                {tasks.map((task, index) => (
+                  <ColumnRoute task={task} columnPosition={index} key={index} />
+                ))}
+              </DataContext.Provider>
+            }
+          />
           <Route path="*" element={<Error />} />
+          </Route>
         </Routes>
 
-        <footer>
-          <h2>Footer</h2>
-        </footer>
-      </div>
+
+      
     </Router>
   );
 }
-
 
 export default App;

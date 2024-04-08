@@ -4,8 +4,8 @@ const ColumnList = ({tasks}) => {
   return (
     <>
       <div className="task-container">
-        {tasks.map((task, index) => (
-          <Column task={task} key={index} columnPosition={index} />
+        {tasks.map((task, columnId) => (
+          <Column task={task} key={columnId} columnPosition={columnId} />
         ))}
       </div>
     </>

@@ -32,10 +32,8 @@ function TaskAdd({setTasks}) {
   }
 
   function handleContentChange(e) {
-    const truncatedContent = e.target.value.slice(0, 10);
-    setUserInputs((prev) => ({...prev, content:truncatedContent}));
+    setUserInputs((prev) => ({...prev, content: e.target.value}));
   }
-
 
   return (
     <div className="form-container">

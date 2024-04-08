@@ -20,33 +20,28 @@ body {
   min-height: 600px;
   background: #161a2b;
   text-align: center;
-  margin: 20px;
   border-radius: 10px;
   padding-bottom: 32px;
 }
 header,
 footer {
+  margin: 1rem;
+  padding: 1rem;
   display: flex;
   justify-content: center;
 }
 
-h1,
-h2 {
-  margin: 32px 0;
-  color: #fff;
-  font-size: 24px;
-}
 .form-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center items horizontally */
+  align-items: center; 
 }
 
 .add-task-form {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center items horizontally */
-  margin-bottom: 16px; /* Add some space between form and button */
+  align-items: center; 
+  margin-bottom: 16px; 
 }
 
 .add-task-input {
@@ -63,29 +58,6 @@ h2 {
 .add-task-input::placeholder {
   color: #e2e2e2;
 }
-
-.add-task-dropdown {
-  padding: 14px 16px;
-  border-radius: 4px;
-  border: 2px solid rgb(216, 164, 91);
-  outline: none;
-  background: transparent;
-  color: #fff;
-  margin-bottom: 16px;
-  width: 320px; 
-}
-
-
-.add-task-dropdown option {
-  background: #161a2b;
-  color: #fff;
-  border: none;
-}
-
-.add-task-dropdown option:first-child {
-  color: #e2e2e2; /* Placeholder color */
-}
-
 
 .add-task-btn {
   padding: 15px;
@@ -109,25 +81,46 @@ h2 {
   justify-content: center;
   position: relative;
   flex-wrap: wrap;
+  gap: 1.5rem;
+  
+  }
+
+  .column-title {
+  margin: 1rem;
+  color: rgb(110, 110, 151);
 }
 
-.task-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  margin: 4px auto;
-  color: #fff;
-  background: linear-gradient(
-    90deg,
-    rgb(101, 47, 8) 0%,
-    rgba(189, 176, 122) 100%
-  );
 
-  padding: 16px;
-  border-radius: 5px;
-  width: 90%;
+
+  .task-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: 4px auto;
+    background: linear-gradient(
+      90deg,
+      rgb(101, 47, 8) 0%,
+      rgba(189, 176, 122) 100%
+    );
+    padding: 6px;
+    width: 90%;
+  }
+
+.task-row-title h2,
+.task-row-content h3 {
+  margin: 0; 
+  align-self: flex-start;
 }
+
+.task-row-title h2 {
+color: rgb(237, 226, 226);
+}
+
+.task-row-content h3 {
+  color: rgb(155, 140, 140);
+}
+
 
 .task-row:nth-child(4n + 1) {
   background: linear-gradient(
@@ -158,16 +151,10 @@ h2 {
   align-items: center;
   font-size: 24px;
   cursor: pointer;
-}
-
-.delete-icon {
-  margin-right: 5px;
+  gap: 1rem;
   color: #fff;
 }
 
-.edit-icon {
-  color: #fff;
-}
 
 /* Modal */
 .overlay {
@@ -183,9 +170,10 @@ h2 {
   align-items: center;
 }
 
-.modalContainer {
+.modal-container {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   margin-top: -30vh;
   width: 80%;
   height: 40%;
@@ -200,25 +188,40 @@ h2 {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.modal-task-text {
+.modal-task-title {
   margin: auto;
   border: 1px solid black;
   height: 10%;
   width: 90%;
 }
 
-.modal-task-text p {
+.modal-task-title p {
   color: white;
   font-size: x-large;
 }
 
-.modal-task-description {
+.modal-task-content {
   margin: auto;
   border: 1px solid black;
   height: 80%;
   width: 90%;
 }
 
-.modal-task-description p {
+.modal-task-content p {
   color: white;
 }
+
+.modal-btn {
+margin: auto;
+width: 15%;
+border-radius: 20%;
+}
+
+.modal-close-alert-container {
+margin: auto;
+background-color: rgb(175, 21, 21);
+}
+
+.modal-close-warning-text {
+color: white;
+} 
