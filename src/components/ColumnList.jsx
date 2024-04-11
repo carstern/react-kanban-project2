@@ -1,11 +1,16 @@
 import Column from "./Column";
+import { useContext } from "react";
+import { DataContext } from "./DataContext";
 
-const ColumnList = ({tasks}) => {
+const ColumnList = () => {
+  const { columns } = useContext(DataContext);
+
   return (
     <>
+      
       <div className="task-container">
-        {tasks.map((task, columnId) => (
-          <Column task={task} key={columnId} columnPosition={columnId} />
+        {columns.map((column) => (
+          <Column key={column.id} title={column.title} />
         ))}
       </div>
     </>
@@ -13,3 +18,4 @@ const ColumnList = ({tasks}) => {
 };
 
 export default ColumnList;
+

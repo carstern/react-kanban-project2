@@ -1,39 +1,40 @@
 import React, { useState } from 'react';
 
-const TaskModal = ({ taskTitle, taskContent, onSave, onClose, handleDelete }) => {
+const TaskModal = ({ taskTitle, taskContent, onSave, onClose, handleDelete, taskId }) => {
+  console.log("Task ID:", taskId);
   const [editedTitle, setEditedTitle] = useState(taskTitle);
   const [editedContent, setEditedContent] = useState(taskContent);
   const [isEditing, setIsEditing] = useState(false);
-  const [showCloseAlert, setShowCloseAlert] = useState(false); // Track if the close alert is shown
+  const [showCloseAlert, setShowCloseAlert] = useState(false);
 
   const handleTitleChange = (event) => {
-    setEditedTitle(event.target.value);
+    setEditedTitle(event.target.value); // Update editedTitle state
   };
 
   const handleContentChange = (event) => {
-    setEditedContent(event.target.value);
+    setEditedContent(event.target.value); // Update editedContent state
   };
 
   const handleEdit = () => {
-    onSave(editedTitle, editedContent);
+    onSave(taskId, editedTitle, editedContent); // Pass taskId along with edited values to onSave
     setIsEditing(false);
   };
+  
 
   const toggleEditing = () => {
     setIsEditing(!isEditing);
   };
 
-  
   const handleOverlayClick = () => {
     if (isEditing) {
-      setShowCloseAlert(true); // Show the close alert if editing
+      setShowCloseAlert(true);
     } else {
-      onClose(); // Close the modal if not editing
+      onClose();
     }
   };
 
   const handleCloseAlert = () => {
-    setShowCloseAlert(false); // Hide the close alert
+    setShowCloseAlert(false);
   };
 
   return (
@@ -44,12 +45,12 @@ const TaskModal = ({ taskTitle, taskContent, onSave, onClose, handleDelete }) =>
             <input
               type='text'
               value={editedTitle}
-              onChange={handleTitleChange}
+              onChange={handleTitleChange} // Update editedTitle state
               className='modal-task-title'
             />
             <textarea
               value={editedContent}
-              onChange={handleContentChange}
+              onChange={handleContentChange} // Update editedContent state
               className='modal-task-content'
             ></textarea>
           </>
@@ -73,13 +74,11 @@ const TaskModal = ({ taskTitle, taskContent, onSave, onClose, handleDelete }) =>
           <button className='modal-btn' onClick={onClose}>
             Close modal
           </button>
-          
         )}
         {!isEditing && (
-          <button className='modal-btn' onClick={handleDelete}>
+          <button className='modal-btn' onClick={() => handleDelete(taskId)}>
             Delete Task
           </button>
-          
         )}
         {isEditing && (
           <button className='modal-btn' onClick={handleEdit}>

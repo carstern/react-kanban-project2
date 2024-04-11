@@ -1,5 +1,5 @@
-import React, {useState, useContext} from "react";
-import {DataContext} from "../App";
+import React, { useState, useContext } from "react";
+import { DataContext } from "./DataContext";
 import {
   RiCloseCircleLine,
   RiArrowRightLine,
@@ -7,126 +7,112 @@ import {
 } from "react-icons/ri";
 import TaskModal from "./TaskModal";
 
-const TaskCard = ({index, columnPosition, task}) => {
-  const [tasks, setTasks] = useContext(DataContext);
+const TaskCard = ({ task }) => {
+  const { tasks, setTasks, columns } = useContext(DataContext);
   const [showModal, setShowModal] = useState(false);
 
-  // const [selectedTask, setSelectedTask] = useState(null); 
-
   const handleTaskClick = () => {
-    // setSelectedTask(task);
     setShowModal(true);
   };
 
-  const text_truncate = function (str, length, ending) {
-    if (length == null) {
-      length = 100;
-    }
-    if (ending == null) {
-      ending = "...";
-    }
-    if (str.length > length) {
-      return str.substring(0, length - ending.length) + ending;
-    } else {
-      return str;
-    }
+  const handleDelete = (taskId) => {
+    setTasks((prevTasks) => {
+      const updatedTasks = prevTasks.filter((task) => task.id !== taskId);
+      return updatedTasks;
+    });
   };
 
-  const handleDelete = () => {
+  const handleSave = (taskId, editedTitle, editedContent) => {
     setTasks((prevTasks) => {
-      const newTasks = prevTasks.map((column) => ({
-        ...column,
-        tasks: column.tasks.map((task) => ({...task})),
-      }));
-      newTasks[columnPosition].tasks.splice(index, 1);
-      return newTasks;
+      const updatedTasks = prevTasks.map((task) => {
+        if (task.id === taskId) {
+          return { ...task, title: editedTitle, content: editedContent };
+        }
+        return task;
+      });
+      return updatedTasks;
     });
-    setShowModal(false);
   };
 
   const moveTaskToRight = () => {
-    if (columnPosition < 2) {
+    const currentColumnIndex = columns.findIndex((column) => column.title === task.belongsTo);
+  
+    if (currentColumnIndex < columns.length - 1) {
+      const nextColumnTitle = columns[currentColumnIndex + 1].title;
       setTasks((prevTasks) => {
-        const taskToMove = tasks[columnPosition].tasks[index];
-        const updatedTasks = prevTasks.map((column, columnIndex) => {
-          if (columnIndex === columnPosition) {
-            return {
-              ...column,
-              tasks: column.tasks.filter((_, taskIndex) => taskIndex !== index),
-            };
-          } else if (columnIndex === columnPosition + 1) {
-            return {
-              ...column,
-              tasks: [...column.tasks, taskToMove],
-            };
-          } else {
-            return column;
+        const updatedTasks = prevTasks.map((t) => {
+          if (t.id === task.id) {
+            return { ...t, belongsTo: nextColumnTitle };
           }
+          return t;
         });
         return updatedTasks;
       });
     }
   };
-
+  
   const moveTaskToLeft = () => {
-    if (columnPosition > 0) {
+    const currentColumnIndex = columns.findIndex((column) => column.title === task.belongsTo);
+  
+    if (currentColumnIndex > 0) {
+      const prevColumnTitle = columns[currentColumnIndex - 1].title;
       setTasks((prevTasks) => {
-        const taskToMove = tasks[columnPosition].tasks[index];
-        const updatedTasks = prevTasks.map((column, columnIndex) => {
-          if (columnIndex === columnPosition) {
-            return {
-              ...column,
-              tasks: column.tasks.filter((_, taskIndex) => taskIndex !== index),
-            };
-          } else if (columnIndex === columnPosition - 1) {
-            return {
-              ...column,
-              tasks: [...column.tasks, taskToMove],
-            };
-          } else {
-            return column;
+        const updatedTasks = prevTasks.map((t) => {
+          if (t.id === task.id) {
+            return { ...t, belongsTo: prevColumnTitle };
           }
+          return t;
         });
         return updatedTasks;
       });
     }
+  };
+  
+
+  // Determine which arrows to display based on the index of the column title
+  const renderArrowIcons = (index) => {
+    if (index === 0) {
+      return <RiArrowRightLine onClick={moveTaskToRight} />;
+    } else if (index === 1) {
+      return (
+        <>
+          <RiArrowLeftLine onClick={moveTaskToLeft} />
+          <RiArrowRightLine onClick={moveTaskToRight} />
+        </>
+      );
+    } else if (index === 2) {
+      return <RiArrowLeftLine onClick={moveTaskToLeft} />;
+    }
+    return null; // Return null for default case
   };
 
   return (
-<div className="task-row" key={index}>
-  <div>
-    <div onClick={() =>handleTaskClick(task)} className="task-row-title">
-      <h2>{text_truncate(tasks[columnPosition].tasks[index].taskTitle, 20)}</h2>
-    </div>
-    <div className="task-row-content">
-      <h3>{text_truncate(tasks[columnPosition].tasks[index].content, 40)}</h3>
-    </div>
-  </div>
-  <div className="icons">
-    <RiCloseCircleLine className="delete-icon" onClick={handleDelete} />
-    {columnPosition === 1 && <RiArrowLeftLine onClick={moveTaskToLeft} />}
-    {columnPosition === 2 && <RiArrowLeftLine onClick={moveTaskToLeft} />}
-    {columnPosition <= 1 && <RiArrowRightLine onClick={moveTaskToRight} />}
-  </div>
-  {showModal && (
-  <TaskModal
-    taskTitle={task.taskTitle}
-    taskContent={task.content}
-    onClose={() => setShowModal(false)}
-    handleDelete={handleDelete}
-    onSave={(title, content) => {
-      setTasks((prevTasks) => {
-        const updatedTasks = [...prevTasks];
-        updatedTasks[columnPosition].tasks[index].taskTitle = title;
-        updatedTasks[columnPosition].tasks[index].content = content;
-        return updatedTasks;
-      });
-      setShowModal(true);
-    }}
-  />
-)}
-</div>
-
+    <>
+      <div className="task-row">
+        <div>
+          <div className="task-row-title"  onClick={handleTaskClick}>
+            <h2>{task.title}</h2>
+          </div>
+          <div className="task-row-content">
+            <h3>{task.content}</h3>
+          </div>
+        </div>
+        <div className="icons">
+          <RiCloseCircleLine className="delete-icon" onClick={() => handleDelete(task.id)} />
+          {renderArrowIcons(columns.findIndex((column) => column.title === task.belongsTo))}
+        </div>
+      </div>
+      {showModal && (
+        <TaskModal
+          taskTitle={task.title}
+          taskContent={task.content}
+          taskId={task.id}
+          onSave={handleSave}
+          onClose={() => setShowModal(false)}
+          handleDelete={handleDelete}
+        />
+      )}
+    </>
   );
 };
 

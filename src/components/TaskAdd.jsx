@@ -1,63 +1,65 @@
-import React, {useState} from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
+import { DataContext } from "./DataContext";
 
-function TaskAdd({setTasks}) {
-  const [userInputs, setUserInputs] = useState({
-    taskTitle: "",
-    content: "",
-  });
+function TaskAdd() {
+  const { tasks, setTasks } = useContext(DataContext);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const titleInputRef = useRef(null);
+
+  useEffect(() => {
+    // Set focus on the title input upon render
+    titleInputRef.current.focus();
+  }, []);
+
   function getTimeStamp() {
     return new Date().toISOString();
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    setTasks((prevTasks) => {
-      let newTasks = prevTasks.map((column) => ({
-        ...column,
-        tasks: column.tasks.map((task) => ({...task})),
-      }));
-      const newTask = {
-        taskTitle: userInputs.taskTitle,
-        content: userInputs.content,
-        date: getTimeStamp(),
-      };
-
-      newTasks[0].tasks.push(newTask);
-      return newTasks;
-    });
-  }
-
-  function handleTitleChange(e) {
-    setUserInputs((prev) => ({...prev, taskTitle: e.target.value}));
-  }
-
-  function handleContentChange(e) {
-    setUserInputs((prev) => ({...prev, content: e.target.value}));
+    const newTask = {
+      id: tasks && tasks.length ? tasks[tasks.length - 1].id + 1 : 1,
+      title: title,
+      content: content,
+      date: getTimeStamp(),
+      belongsTo: "Todo",
+    };
+  
+    setTasks((prevTasks) => [...prevTasks, newTask]);
+  
+    // Clear the form after submitting
+    setTitle("");
+    setContent("");
+  
+    // Set focus on the title input after submitting
+    titleInputRef.current.focus();
   }
 
   return (
     <div className="form-container">
-      <form className="add-task-form">
+      <form className="add-task-form" onSubmit={handleSubmit}>
         <div className="input-container">
           <input
+            ref={titleInputRef}
             type="text"
             placeholder="Add Task Title"
             className="add-task-input"
             required
-            value={userInputs.taskTitle}
-            onChange={handleTitleChange}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <input
             type="text"
             placeholder="Add Description"
-            value={userInputs.content}
-            onChange={handleContentChange}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
             className="add-task-input"
             required
           />
           <label htmlFor="list"></label>
         </div>
-        <button type="submit" className="add-task-btn" onClick={handleSubmit}>
+        <button type="submit" className="add-task-btn">
           Add
         </button>
       </form>

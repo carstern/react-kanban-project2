@@ -1,22 +1,23 @@
 import Column from "./Column";
 import Error from "./Error";
 import { useContext } from "react";
-import { DataContext } from "../App";
+import { DataContext } from "./DataContext";
 import { Routes, Route } from "react-router-dom";
 
 export default function ColumnRoute() {
-  const [tasks, setTasks] = useContext(DataContext);
+  const { tasks } = useContext(DataContext);
 
   return (
     <>
       <section className="kanban-app">
         <Routes>
-          {tasks.map((task, index) => {
+          {/* Iterate through unique column titles */}
+          {[...new Set(tasks.map((task) => task.belongsTo))].map((title, index) => {
             return (
               <Route
                 key={index}
-                path={`/${task.columnTitle}`}
-                element={<Column task={task} key={index} columnPosition={index} routed={true} />}
+                path={`/${title}`}
+                element={<Column title={title} />}
               />
             );
           })}
