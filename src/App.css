@@ -35,6 +35,7 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center; 
+  margin-top: 50px;
 }
 
 .add-task-form {
@@ -101,7 +102,7 @@ footer {
     background: linear-gradient(
       90deg,
       rgb(101, 47, 8) 0%,
-      rgba(189, 176, 122) 100%
+      rgb(88, 81, 56) 100%
     );
     padding: 6px;
     width: 90%;
@@ -110,7 +111,7 @@ footer {
 .task-row-title h2,
 .task-row-content h3 {
   margin: 0; 
-  align-self: flex-start;
+  text-align: left;
 }
 
 .task-row-title h2 {
@@ -118,7 +119,7 @@ color: rgb(237, 226, 226);
 }
 
 .task-row-content h3 {
-  color: rgb(155, 140, 140);
+  color: rgb(192, 175, 175);
 }
 
 
@@ -126,7 +127,7 @@ color: rgb(237, 226, 226);
   background: linear-gradient(
     90deg,
     rgb(39, 6, 105) 0%,
-    rgba(189, 176, 122) 100%
+    rgb(88, 81, 56) 100%
   );
 }
 
@@ -134,7 +135,7 @@ color: rgb(237, 226, 226);
   background: linear-gradient(
     90deg,
     rgb(77, 6, 73) 0%,
-    rgba(189, 176, 122) 100%
+    rgb(88, 81, 56) 100%
   );
 }
 
@@ -142,7 +143,7 @@ color: rgb(237, 226, 226);
   background: linear-gradient(
     90deg,
     rgb(8, 56, 90) 0%,
-    rgba(189, 176, 122) 100%
+    rgb(88, 81, 56) 100%
   );
 }
 
@@ -231,7 +232,7 @@ color: white;
 
 /* Task page */
 
-.task-container {
+.task-page-container {
   display: flex;
   flex-direction: column;
   align-items: center;

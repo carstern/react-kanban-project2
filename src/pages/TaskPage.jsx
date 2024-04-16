@@ -14,7 +14,7 @@ const TaskPage = () => {
   }
 
   return (
-    <main className="task-container">
+    <main className="task-page-container">
         <div className="text-container">
       <h2 className="task-title">{task.title}</h2>
       <p className="task-content">{task.content}</p>

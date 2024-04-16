@@ -96,7 +96,7 @@ const TaskCard = ({ task }) => {
             <h2>{task.title}</h2>
           </div></ Link>
           <div className="task-row-content">
-            <h3>{task.content}</h3>
+            <h3>{task.content.length <= 65 ? task.content : `${task.content.slice(0,65)}...`}</h3>
           </div>
         </div>
         <div className="icons">
