@@ -3,6 +3,7 @@ import ColumnList from "./components/ColumnList";
 import {Routes, Route} from "react-router-dom";
 import Error from "./components/Error";
 import ColumnPage from "./pages/ColumnPage";
+import TaskPage from "./pages/TaskPage";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { DataProvider } from "./components/DataContext";
@@ -27,24 +28,25 @@ function App() {
   
   // tasks variabeln håller data från taskdata (mitt initial state) och genom den kan jag komma åt de objekt jag har i den filen. Ex tasks, columner och deras properties.
 
-  return (
-    <>
-      <Header />
-      <DataProvider>
-      <Routes>
-        <Route parth="/" element={<ColumnList />}>
-        <Route path="/columns/:columnTitle" element={<ColumnPage />} />
-          <Route path="/column" element={<Column />} />
-          <Route path="*" element={<Error />} />
-        </Route>
-      </Routes>
-      </DataProvider>
-      <Footer />
-    </>
-  );
-}
 
-export default App;
+    return (
+      <>
+        <Header />
+        <DataProvider>
+          <Routes>
+            <Route path="/" element={<ColumnList />} />
+            <Route path="/columns/:columnTitle" element={<ColumnPage />} />
+            <Route path="/column" element={<Column />} />
+            <Route path="/task/:id" element={<TaskPage/>}/>
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </DataProvider>
+        <Footer />
+      </>
+    );
+  }
+  
+  export default App;
 
 {
   /* DataContex.provider tillhandahåller den data som variabeln DataContexts values innehåller, exempelvis via det som useState tar in från taskdata. Genom att sätta tasks så tar jag mig in i taskdata och kommer åt datan samt kan pass data till den med setTask.  */

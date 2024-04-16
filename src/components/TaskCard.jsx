@@ -1,9 +1,11 @@
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import { DataContext } from "./DataContext";
 import {
   RiCloseCircleLine,
   RiArrowRightLine,
   RiArrowLeftLine,
+  RiEditLine 
 } from "react-icons/ri";
 import TaskModal from "./TaskModal";
 
@@ -90,15 +92,15 @@ const TaskCard = ({ task }) => {
     <>
       <div className="task-row">
         <div>
-          <div className="task-row-title"  onClick={handleTaskClick}>
+        <Link to={`/task/${task.id}`}><div className="task-row-title"  >
             <h2>{task.title}</h2>
-          </div>
+          </div></ Link>
           <div className="task-row-content">
             <h3>{task.content}</h3>
           </div>
         </div>
         <div className="icons">
-          <RiCloseCircleLine className="delete-icon" onClick={() => handleDelete(task.id)} />
+        <RiEditLine onClick={handleTaskClick}/><RiCloseCircleLine className="delete-icon" onClick={() => handleDelete(task.id)} />
           {renderArrowIcons(columns.findIndex((column) => column.title === task.belongsTo))}
         </div>
       </div>

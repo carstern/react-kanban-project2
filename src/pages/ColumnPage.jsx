@@ -7,18 +7,18 @@ const ColumnPage = () => {
   const { columnTitle } = useParams();
   const { tasks } = useContext(DataContext);
 
-  console.log("Column Title:", columnTitle);
-
   // Filter tasks based on columnTitle
   const filteredTasks = tasks.filter((task) => task.belongsTo === columnTitle);
 
-  console.log("Filtered Tasks:", filteredTasks);
-
   return (
     <div className="kanban-app">
-      {filteredTasks.map((task) => (
-        <TaskCard key={task.id} task={task} />
-      ))}
+      {columnTitle && (
+        <>
+          {filteredTasks.map((task) => (
+            <TaskCard key={task.id} task={task} />
+          ))}
+        </>
+      )}
     </div>
   );
 };

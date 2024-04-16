@@ -15,7 +15,7 @@ const Column = ({ title }) => {
 
   return (
     <div className="kanban-app">
-      <Link to={`/column/${title}`}>
+      <Link to={`/columns/${title}`}>
         <h2 className="column-title">{title}</h2>
       </Link>
       <div className="task-list">

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 const TaskModal = ({ taskTitle, taskContent, onSave, onClose, handleDelete, taskId }) => {
-  console.log("Task ID:", taskId);
   const [editedTitle, setEditedTitle] = useState(taskTitle);
   const [editedContent, setEditedContent] = useState(taskContent);
   const [isEditing, setIsEditing] = useState(false);
